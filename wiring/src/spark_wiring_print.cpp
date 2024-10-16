@@ -220,7 +220,7 @@ size_t Print::printVariant(const Variant& var) {
 
 size_t Print::vprintf(bool newline, const char* format, va_list args)
 {
-    const int bufsize = 20;
+    const int bufsize = 40;
     char test[bufsize];
     va_list args2;
     va_copy(args2, args);

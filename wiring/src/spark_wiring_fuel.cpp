@@ -92,7 +92,7 @@ namespace detail {
     float _getVCell(byte MSB, byte LSB) {
         // VCELL = 12-bit value, 1.25mV (1V/800) per bit
         float value = (float)((MSB << 4) | (LSB >> 4));
-        return value / 800.0;
+        return value / 800.0f;
     }
 
     // Converts SOC_REGISTER reading to state of charge of the cell as a percentage
