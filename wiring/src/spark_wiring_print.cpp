@@ -220,28 +220,25 @@ size_t Print::printVariant(const Variant& var) {
 
 size_t Print::vprintf(bool newline, const char* format, va_list args)
 {
-    static char f_buffer[20];
-    char* buffer;
-  
+    const int bufsize = 40;
+    char test[bufsize];
     va_list args2;
     va_copy(args2, args);
-    size_t n = vsnprintf(NULL, 0, format, args) + 1;
-  
-    buffer = (n < sizeof(f_buffer)) ? f_buffer : new char[n];
-    if(buffer == nullptr) {
-        return 0;
-  
-    } else {
-        vsnprintf(buffer, n, format, args2);
-        print(buffer);
-    
-        if (newline)
-            n += println();
-    
-        if(buffer != f_buffer)
-            delete buffer;
+    size_t n = vsnprintf(test, bufsize, format, args);
+
+    if (n<bufsize)
+    {
+        n = print(test);
     }
-  
+    else
+    {
+        char bigger[n+1];
+        n = vsnprintf(bigger, n+1, format, args2);
+        n = print(bigger);
+    }
+    if (newline)
+        n += println();
+
     va_end(args2);
     return n;
 }
